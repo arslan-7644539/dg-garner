@@ -21,7 +21,7 @@ const Home = () => {
     {/* Product 1: Theme */}
     <div className="bg-white shadow-lg rounded-lg overflow-hidden">
       <img
-        src="https://via.placeholder.com/600x400?text=Premium+WordPress+Theme"
+        src="https://img.freepik.com/free-psd/smiley-woman-wearing-sunglasses-landing-page-template_23-2148782097.jpg?t=st=1736100689~exp=1736104289~hmac=cd4b6a8904179ee43f4980245d2b36750c47914f6cd43b11a5a423c65fdb1018&w=1060"
         alt="Premium WordPress Theme"
         className="w-full h-64 object-cover"
       />
@@ -43,7 +43,7 @@ const Home = () => {
     {/* Product 2: Plugin */}
     <div className="bg-white shadow-lg rounded-lg overflow-hidden">
       <img
-        src="https://via.placeholder.com/600x400?text=WordPress+Plugin"
+        src="https://img.freepik.com/free-psd/design-landing-page-template_23-2148947823.jpg?t=st=1736100895~exp=1736104495~hmac=a1d1c5d717734ca8d42c8b04b91928bfb1290b92f08540f707858be1d4cf918d&w=1060"
         alt="WordPress Plugin"
         className="w-full h-64 object-cover"
       />
@@ -65,7 +65,7 @@ const Home = () => {
     {/* Product 3: Theme */}
     <div className="bg-white shadow-lg rounded-lg overflow-hidden">
       <img
-        src="https://via.placeholder.com/600x400?text=Creative+Theme"
+        src="https://img.freepik.com/free-psd/wellness-concept-landing-page-template_23-2150094962.jpg?t=st=1736100761~exp=1736104361~hmac=00136a452a9f0af57588fa33136dae939f44d0aa2d777897f09b7874ad3e4b2d&w=1060"
         alt="Creative WordPress Theme"
         className="w-full h-64 object-cover"
       />
