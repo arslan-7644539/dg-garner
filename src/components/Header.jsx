@@ -1,12 +1,17 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { SearchContext } from "./SearchContext";
 
 const Header = () => {
+  
+  const { searchInput, setSearchInput } = useContext(SearchContext);
+  console.log(searchInput);
+
   return (
     <header className="bg-gradient-to-r from-blue-500 to-purple-500 shadow-md fixed top-0 w-full">
       <div className="container mx-auto flex items-center justify-between px-6 py-4">
         {/* Logo */}
-        <div className="text-white text-2xl font-bold">DG Garner</div>
+        <Link to="/" className="text-white hover:text-yellow-400 text-2xl font-bold">DG Garner</Link>
 
         {/* Navigation Links */}
         <nav className="hidden md:flex space-x-8">
@@ -58,6 +63,8 @@ const Header = () => {
         {/* Search Bar */}
         <div className="relative hidden md:block">
           <input
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
             type="text"
             placeholder="Search..."
             className="w-64 px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
