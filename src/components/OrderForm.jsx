@@ -20,8 +20,8 @@ const OrderForm = ({ itemTitle }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you can handle the form submission logic
-    console.log(formData);
+    
+    // console.log(formData);
 
     const { data, error } = await supabase
       .from("DG-Garner")
