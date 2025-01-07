@@ -12,6 +12,7 @@ const ShopNow = () => {
   const [showForm, setShowForm] = useState(false); // Manage form visibility
 
   const cardResult = cardData.filter((card) => card.title === ShopNow);
+  console.log("🚀 ~ ShopNow ~ cardResult:", cardResult)
  
   const itemTitle = cardResult[0].title;
 
