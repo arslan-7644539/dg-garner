@@ -25,25 +25,26 @@ const ShopNow = () => {
     <div>
       <Header /> {/* Fixed Header */}
       {/* Main Content Area */}
-      <div className="flex justify-between items-start min-h-screen px-5 pt-[100px] pb-[10px]">
+      <div className="flex justify-between items-start min-h-screen  px-5 pt-[100px] pb-[10px]">
         {cardResult.map((card, index) => (
           <>
             {/* Left Side: Card with Border */}
             <div
               key={`left-${index}`}
-              className="w-[48%] bg-white shadow-lg rounded-lg overflow-hidden border border-gray-300"
+              className="md:w-full md:max-h-full bg-white  rounded-lg overflow-hidden "
             >
               <img
                 src={card.imageUrl}
                 alt="Premium WordPress Theme"
                 className="w-full h-64 object-cover"
               />
+              <br />  <br /> 
               <div className="p-6">
-                <h3 className="text-2xl font-semibold text-gray-800">
+                <h3 className="text-2xl font-semibold text-gray-800 text-center">
                   {card.title}
                 </h3>
-                <p className="mt-4 text-gray-600">{card.description}</p>
-                <p className="mt-4 text-xl font-semibold text-green-600">
+                <p className="mt-4 text-center  text-gray-600">{card.description}</p>
+                <p className="mt-4 text-xl text-center font-semibold text-green-600">
                   {card.price}
                 </p>
               </div>
