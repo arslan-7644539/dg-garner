@@ -7,6 +7,7 @@ import Contact from "./pages/Contact";
 import BlogPost from "./pages/BlogPost";
 import ShopNow from "./pages/ShopNow";
 import { SearchProvider } from "./components/SearchContext";
+import OrderForm from "./components/OrderForm";
 
 const App = () => {
   return (

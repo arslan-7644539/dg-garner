@@ -1,46 +1,80 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import {  useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { CardContext } from "../components/CardContext";
+import OrderForm from "../components/OrderForm";
 
 const ShopNow = () => {
   const { cardData } = useContext(CardContext);
-  console.log("🚀 ~ ShopNow ~ cardData:", cardData)
-  //   console.log(cardData);
   const { ShopNow } = useParams();
-  console.log("🚀 ~ ShopNow ~ ShopNow:", ShopNow)
+
+  const [showForm, setShowForm] = useState(false); // Manage form visibility
+
+  const cardResult = cardData.filter((card) => card.title === ShopNow);
+ 
+  const itemTitle = cardResult[0].title;
 
 
-  const cardResult = cardData.filter((card) => card.title === ShopNow );
+  const handleBuyNowClick = () => {
+    setShowForm(true); // Show the order form when Buy Now is clicked
+  };
+
 
   return (
     <div>
-      <Header />
-      <div className="flex items-center justify-center mt-20 mb-20 ">
+      <Header /> {/* Fixed Header */}
+      {/* Main Content Area */}
+      <div className="flex justify-between items-start min-h-screen px-5 pt-[100px] pb-[10px]">
         {cardResult.map((card, index) => (
-          <div
-            key={index}
-            className="bg-white shadow-lg rounded-lg overflow-hidden w-[30%]  m-auto "
-          >
-            <img
-              src={card.imageUrl}
-              alt="Premium WordPress Theme"
-              className="w-full h-64 object-cover"
-            />
-            <div className="p-6">
-              <h3 className="text-2xl font-semibold text-gray-800">
-                {card.title}
-              </h3>
-              <p className="mt-4 text-gray-600">{card.description}</p>
-              <p className="mt-4 text-xl font-semibold text-green-600">
-                {card.price}
-              </p>
+          <>
+            {/* Left Side: Card with Border */}
+            <div
+              key={`left-${index}`}
+              className="w-[48%] bg-white shadow-lg rounded-lg overflow-hidden border border-gray-300"
+            >
+              <img
+                src={card.imageUrl}
+                alt="Premium WordPress Theme"
+                className="w-full h-64 object-cover"
+              />
+              <div className="p-6">
+                <h3 className="text-2xl font-semibold text-gray-800">
+                  {card.title}
+                </h3>
+                <p className="mt-4 text-gray-600">{card.description}</p>
+                <p className="mt-4 text-xl font-semibold text-green-600">
+                  {card.price}
+                </p>
+              </div>
             </div>
-          </div>
+
+            {/* Right Side: Dynamic Section */}
+            <div
+              key={`right-${index}`}
+              className={`${
+                showForm
+                  ? "w-[30%] p-6  bg-white  animate-fadeIn"
+                  : "w-[30%] h-64 flex items-center justify-center border bg-white shadow-lg rounded-lg"
+              } transition-all duration-500 ease-in-out`}
+            >
+              {showForm ? (
+                <OrderForm itemTitle={itemTitle} /> // Show the order form if showForm is true
+              ) : (
+                <>
+                  <button
+                    onClick={handleBuyNowClick}
+                    className="bg-blue-600 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-700"
+                  >
+                    Buy Now
+                  </button>
+                </>
+              )}
+            </div>
+          </>
         ))}
       </div>
-      <Footer />
+      <Footer /> {/* Relative Footer */}
     </div>
   );
 };
