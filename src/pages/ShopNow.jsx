@@ -7,6 +7,7 @@ import OrderForm from "../components/OrderForm";
 
 const ShopNow = () => {
   const { cardData } = useContext(CardContext);
+
   const { ShopNow } = useParams();
 
   const [showForm, setShowForm] = useState(false); // Manage form visibility
@@ -18,6 +19,7 @@ const ShopNow = () => {
 
 
   const handleBuyNowClick = () => {
+    
     setShowForm(true); // Show the order form when Buy Now is clicked
   };
 

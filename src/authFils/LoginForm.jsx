@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import supabase from "../lib/supabase";
+import { useNavigate } from "react-router";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import toast from "react-hot-toast";
 
 const LoginForm = () => {
+   const navigate = useNavigate()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -15,21 +21,74 @@ const LoginForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    // debugger
     e.preventDefault();
-    console.log("Login Data Submitted:", formData);
+    // console.log("Login Data Submitted:", formData);
     // Add your login logic here
+
+    const { data: loginData, error: loginError } =
+      await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      });
+    if (loginError) {
+      console.log(loginError);
+      toast.error("Incorrect password." , {
+        position:"top-right"
+      })
+    } else {
+      console.log(loginData);
+      // ============================================= login filter method
+
+      let { data: users, error } = await supabase
+        .from("users")
+        .select("*")
+        .eq("email", formData.email);
+      //   console.log("🚀 ~ handleSubmit ~ users:", users)
+
+      // Filters
+
+      if (error) {
+        console.log(error);
+      
+      } else {
+        if (users.length > 0) {
+          const user = users[0];
+          console.log("🚀 ~ handleSubmit ~ user:", user);
+          if (user.password === formData.password) {
+          toast.success('Successfully Login!', {
+        position:"top-right"})
+
+            console.log("Login successful!", user);
+            navigate("/")
+          } else {
+            console.log("Incorrect password."); 
+        }
+    } else {
+        console.log("user not found");
+      
+        }
+      }
+    }
   };
 
   return (
+    <>
+    <Header/>
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-500 px-4">
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
-        <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">Login</h2>
+        <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">
+          Login
+        </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Email Field */}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
               Email
             </label>
             <input
@@ -46,7 +105,10 @@ const LoginForm = () => {
 
           {/* Password Field */}
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
               Password
             </label>
             <input
@@ -79,6 +141,8 @@ const LoginForm = () => {
         </p>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 

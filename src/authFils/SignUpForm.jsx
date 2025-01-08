@@ -1,7 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { data, Link, useNavigate } from "react-router-dom";
+import supabase from "../lib/supabase";
+import toast, { ToastBar } from "react-hot-toast";
+import { GiToaster } from "react-icons/gi";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const SignUpForm = () => {
+    const navigate =useNavigate()
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -15,22 +21,69 @@ const SignUpForm = () => {
       [name]: value,
     });
   };
-
-  const handleSubmit = (e) => {
+debugger
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form Data Submitted:", formData);
-    // Add your sign-up logic here
+    const { data:signUpData, error:signUpError } = await supabase.auth.signUp({
+      email: formData.email,
+      password: formData.password,
+      options: {
+        emailRedirectTo : "http://localhost:5173/login",
+        
+      },
+    });
+    console.log("🚀 ~ handleSubmit ~ data:", signUpData)
+    if (signUpError) {
+      console.log(signUpError);
+    } else {
+        console.log(signUpData);
+
+      const { data:insertData, error:insertError } = await supabase
+        .from("users")
+        .insert([
+          {
+            email: formData.email,
+            username: formData.username,
+            password: formData.password,
+            uid: signUpData.user.id,
+          },
+        ])
+        .select();
+      if (insertError) {
+        console.log(insertError);
+      } else {
+        console.log(insertData);
+      }
+
+      setFormData({
+        username: "",
+        email: "",
+        password: "",
+      });
+      toast.success('Successfully SignUp!', {
+        position:"top-right"
+      })
+      navigate("/login")
+    }
   };
 
   return (
+    <>
+    <Header/>
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-500 px-4">
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
-        <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">Sign Up</h2>
+        <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">
+          Sign Up
+        </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Username Field */}
           <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="username"
+              className="block text-sm font-medium text-gray-700"
+            >
               Username
             </label>
             <input
@@ -47,7 +100,10 @@ const SignUpForm = () => {
 
           {/* Email Field */}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
               Email
             </label>
             <input
@@ -64,7 +120,10 @@ const SignUpForm = () => {
 
           {/* Password Field */}
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
               Password
             </label>
             <input
@@ -97,6 +156,8 @@ const SignUpForm = () => {
         </p>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 
