@@ -8,6 +8,8 @@ import BlogPost from "./pages/BlogPost";
 import ShopNow from "./pages/ShopNow";
 import { SearchProvider } from "./components/SearchContext";
 import OrderForm from "./components/OrderForm";
+import SignUpForm from "./authFils/SignUpForm";
+import LoginForm from "./authFils/LogInForm";
 
 const App = () => {
   return (
@@ -19,6 +21,8 @@ const App = () => {
         <Route path="/blog" element={<Blog />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/blog/:title" element={<BlogPost />} />
+        <Route path="/signup" element={<SignUpForm/>}/>
+        <Route path="/login" element={<LoginForm/>}/>
       </Routes>
     </SearchProvider>
   );
