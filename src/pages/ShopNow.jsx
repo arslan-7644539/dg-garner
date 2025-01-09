@@ -1,28 +1,47 @@
 import React, { useState, useContext } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CardContext } from "../components/CardContext";
 import OrderForm from "../components/OrderForm";
+import { AuthContext } from "../components/AuthContext";
+import toast from "react-hot-toast";
 
 const ShopNow = () => {
+  const navigate = useNavigate();
+  // debugger
+  const { session } = useContext(AuthContext);
+
   const { cardData } = useContext(CardContext);
 
+ 
   const { ShopNow } = useParams();
 
   const [showForm, setShowForm] = useState(false); // Manage form visibility
 
   const cardResult = cardData.filter((card) => card.title === ShopNow);
-  console.log("🚀 ~ ShopNow ~ cardResult:", cardResult)
- 
-  const itemTitle = cardResult[0].title;
 
+  if (cardResult.length === 0) {
+    return navigate("*");
+  }
+
+  // console.log("🚀 ~ ShopNow ~ cardResult:", cardResult);
+
+  const itemTitle = cardResult[0].title;
+  // console.log("🚀 ~ ShopNow ~ cardResult:", cardResult[0].title)
 
   const handleBuyNowClick = () => {
-    
-    setShowForm(true); // Show the order form when Buy Now is clicked
-  };
+    // debugger
+    if (session !== null) {
+      setShowForm(true);
+    } else {
+      toast.error("Please login.", {
+        position: "top-right",
+      });
 
+      navigate("/login");
+    }
+  };
 
   return (
     <div>
@@ -41,12 +60,14 @@ const ShopNow = () => {
                 alt="Premium WordPress Theme"
                 className="w-full h-64 object-cover"
               />
-              <br />  <br /> 
+              <br /> <br />
               <div className="p-6">
                 <h3 className="text-2xl font-semibold text-gray-800 text-center">
                   {card.title}
                 </h3>
-                <p className="mt-4 text-center  text-gray-600">{card.description}</p>
+                <p className="mt-4 text-center  text-gray-600">
+                  {card.description}
+                </p>
                 <p className="mt-4 text-xl text-center font-semibold text-green-600">
                   {card.price}
                 </p>

@@ -127,9 +127,6 @@
 
 // ========================================1==================================================================
 
-
-
-
 // import React, { useContext, useState } from "react";
 // import { Link, NavLink } from "react-router-dom";
 // import { SearchContext } from "./SearchContext";
@@ -297,12 +294,7 @@
 
 // export default Header;
 
-
-
-
 // ==============================================2end===============
-
-
 
 import React, { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
@@ -408,7 +400,7 @@ const Header = () => {
             className="px-4 py-2 bg-yellow-400 text-white rounded-full font-semibold hover:bg-yellow-500"
           >
             Sign Up
-          </Link>
+          </Link> 
         </nav>
       </div>
 
@@ -482,5 +474,3 @@ const Header = () => {
 };
 
 export default Header;
-
-

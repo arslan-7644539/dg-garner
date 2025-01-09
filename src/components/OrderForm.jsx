@@ -24,7 +24,7 @@ const OrderForm = ({ itemTitle }) => {
     // console.log(formData);
 
     const { data, error } = await supabase
-      .from("DG-Garner")
+      .from("Orders")
       .insert([
         {
           title: formData.itemTitle,
