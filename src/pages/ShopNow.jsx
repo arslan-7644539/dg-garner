@@ -11,10 +11,10 @@ const ShopNow = () => {
   const navigate = useNavigate();
   // debugger
   const { session } = useContext(AuthContext);
+  const uid = session.user.id
 
   const { cardData } = useContext(CardContext);
 
- 
   const { ShopNow } = useParams();
 
   const [showForm, setShowForm] = useState(false); // Manage form visibility
@@ -22,7 +22,16 @@ const ShopNow = () => {
   const cardResult = cardData.filter((card) => card.title === ShopNow);
 
   if (cardResult.length === 0) {
-    return navigate("*");
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <h1 className="text-4xl font-semibold text-gray-800 mb-4">
+          Item Not Found
+        </h1>
+        <p className="text-xl text-gray-600">
+          Sorry, we couldn't find the item you're looking for.
+        </p>
+      </div>
+    );
   }
 
   // console.log("🚀 ~ ShopNow ~ cardResult:", cardResult);
@@ -84,7 +93,7 @@ const ShopNow = () => {
               } transition-all duration-500 ease-in-out`}
             >
               {showForm ? (
-                <OrderForm itemTitle={itemTitle} /> // Show the order form if showForm is true
+                <OrderForm itemTitle={itemTitle} uid={uid} /> // Show the order form if showForm is true
               ) : (
                 <>
                   <button

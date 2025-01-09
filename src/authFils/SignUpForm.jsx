@@ -21,7 +21,7 @@ const SignUpForm = () => {
       [name]: value,
     });
   };
-debugger
+// debugger
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form Data Submitted:", formData);
@@ -33,7 +33,7 @@ debugger
         
       },
     });
-    console.log("🚀 ~ handleSubmit ~ data:", signUpData)
+    // console.log("🚀 ~ handleSubmit ~ data:", signUpData)
     if (signUpError) {
       console.log(signUpError);
     } else {

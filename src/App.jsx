@@ -25,7 +25,7 @@ const App = () => {
           <Route path="/blog/:title" element={<BlogPost />} />
           <Route path="/signup" element={<SignUpForm />} />
           <Route path="/login" element={<LoginForm />} />
-          <Route path="*" element={<ItemNotFound />} />
+          <Route path="/*" element={<ItemNotFound />} />
         </Routes>
       </SearchProvider>
     </AuthProvider>

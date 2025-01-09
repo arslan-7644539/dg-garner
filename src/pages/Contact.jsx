@@ -1,8 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import supabase from "../lib/supabase";
+import toast from "react-hot-toast";
 
 const Contact = () => {
+  const [feedback, setFeedback] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  // debugger
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { data, error } = await supabase
+      .from("Messages")
+      .insert([
+        {
+          Name: feedback.name,
+          Email: feedback.email,
+          Message: feedback.message,
+        },
+      ])
+      .select();
+    if (error) {
+      console.log(error);
+      toast.error("Something went wrong!", {
+        position: "top-right",
+      });
+    } else {
+      console.log(data);
+      toast.success("Successfully submit your message", {
+        position: "top-right",
+      });
+      setFeedback({
+        name: "",
+        email: "",
+        message: "",
+      });
+    }
+  };
+
   return (
     <div>
       <Header />
@@ -25,7 +63,7 @@ const Contact = () => {
             will get back to you as soon as possible.
           </p>
           <div className="mt-8 max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
-            <form>
+            <form onSubmit={handleSubmit}>
               {/* Name Field */}
               <div className="mb-6">
                 <label
@@ -35,6 +73,10 @@ const Contact = () => {
                   Your Name
                 </label>
                 <input
+                  onChange={(e) =>
+                    setFeedback({ ...feedback, name: e.target.value })
+                  }
+                  value={feedback.name}
                   type="text"
                   id="name"
                   name="name"
@@ -53,6 +95,10 @@ const Contact = () => {
                   Your Email
                 </label>
                 <input
+                  onChange={(e) =>
+                    setFeedback({ ...feedback, email: e.target.value })
+                  }
+                  value={feedback.email}
                   type="email"
                   id="email"
                   name="email"
@@ -71,6 +117,10 @@ const Contact = () => {
                   Your Message
                 </label>
                 <textarea
+                  onChange={(e) =>
+                    setFeedback({ ...feedback, message: e.target.value })
+                  }
+                  value={feedback.message}
                   id="message"
                   name="message"
                   rows="6"
@@ -130,7 +180,7 @@ const Contact = () => {
           </div>
         </section>
       </div>
-      
+
       <Footer />
     </div>
   );

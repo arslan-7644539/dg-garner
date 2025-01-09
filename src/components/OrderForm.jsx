@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import supabase from "../lib/supabase";
 
-const OrderForm = ({ itemTitle }) => {
+const OrderForm = ({ itemTitle , uid}) => {
   console.log("🚀 ~ OrderForm ~ itemTitle:", itemTitle);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     address: "",
     itemTitle: itemTitle || "",
+    uid: uid || "",
   });
   console.log("🚀 ~ OrderForm ~ formData:", formData);
 
@@ -23,7 +24,7 @@ const OrderForm = ({ itemTitle }) => {
     
     // console.log(formData);
 
-    const { data, error } = await supabase
+    const { data:userData, error } = await supabase
       .from("Orders")
       .insert([
         {
@@ -31,6 +32,7 @@ const OrderForm = ({ itemTitle }) => {
           email: formData.email,
           address: formData.address,
           fullName: formData.fullName,
+          uid: formData.uid
         },
       ])
 
@@ -38,15 +40,16 @@ const OrderForm = ({ itemTitle }) => {
     if (error) {
       console.log(error);
     } else {
-      console.log(data);
+      console.log(userData);
     }
 
-    alert("Your order has been placed!");
+    alert("Your order has been placed!")
     setFormData({
       fullName: "",
       email: "",
       address: "",
       itemTitle: itemTitle || "",
+      uid: uid || "",
     });
   };
 
