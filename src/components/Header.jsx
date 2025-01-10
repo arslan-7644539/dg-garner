@@ -12,15 +12,11 @@ const Header = () => {
   const navigate = useNavigate();
 
   const { session } = useContext(AuthContext);
-  console.log("🚀 ~ Header ~ session:", session);
 
   async function signOut() {
     const { error } = await supabase.auth.signOut();
 
     if (!error) {
-      // setUserid(null);
-      // setIsLogedIn(false);
-
       toast.success("Successfully Log Out!", {
         position: "top-right",
       });
