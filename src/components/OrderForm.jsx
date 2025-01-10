@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import supabase from "../lib/supabase";
+import toast from "react-hot-toast";
 
 const OrderForm = ({ itemTitle , uid}) => {
-  console.log("🚀 ~ OrderForm ~ itemTitle:", itemTitle);
+  // console.log("🚀 ~ OrderForm ~ itemTitle:", itemTitle);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -10,7 +11,7 @@ const OrderForm = ({ itemTitle , uid}) => {
     itemTitle: itemTitle || "",
     uid: uid || "",
   });
-  console.log("🚀 ~ OrderForm ~ formData:", formData);
+  // console.log("🚀 ~ OrderForm ~ formData:", formData);
 
   const handleChange = (e) => {
     setFormData({
@@ -41,9 +42,12 @@ const OrderForm = ({ itemTitle , uid}) => {
       console.log(error);
     } else {
       console.log(userData);
+      toast.success("Successfully Place Order", {
+        position: "top-right",
+      });
     }
 
-    alert("Your order has been placed!")
+    // alert("Your order has been placed!")
     setFormData({
       fullName: "",
       email: "",

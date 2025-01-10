@@ -10,7 +10,6 @@ const ItemNotFound = () => {
         <h1 className="text-4xl font-semibold text-gray-800 mb-4">
           404 Page Not Found
         </h1>
-       
       </div>
       <Footer />
     </div>

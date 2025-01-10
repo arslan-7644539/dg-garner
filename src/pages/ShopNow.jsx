@@ -11,7 +11,7 @@ const ShopNow = () => {
   const navigate = useNavigate();
   // debugger
   const { session } = useContext(AuthContext);
-  const uid = session.user.id
+  const uid = session?.user?.id
 
   const { cardData } = useContext(CardContext);
 
@@ -44,11 +44,11 @@ const ShopNow = () => {
     if (session !== null) {
       setShowForm(true);
     } else {
-      toast.error("Please login.", {
+      toast.error("Please SignUP.", {
         position: "top-right",
       });
 
-      navigate("/login");
+      navigate("/signup");
     }
   };
 
