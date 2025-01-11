@@ -99,7 +99,9 @@ const Header = () => {
           >
             Blog
           </NavLink>
-          <NavLink
+          {session?.user?.id ? (
+            
+               <NavLink
             to="/contact"
             className={({ isActive }) =>
               isActive
@@ -109,6 +111,9 @@ const Header = () => {
           >
             Contact
           </NavLink>
+            
+          ) : ("")}
+       
           {!session?.user?.id ? (
             <>
               <Link

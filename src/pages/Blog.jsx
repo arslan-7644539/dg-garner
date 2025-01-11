@@ -4,41 +4,50 @@ import Footer from "../components/Footer";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { SearchContext } from "../components/SearchContext";
-
+import supabase from "../lib/supabase";
 
 const Blog = () => {
   const [blogData, setBlogData] = useState([]);
   const url = "https://677692da12a55a9a7d0c32ef.mockapi.io/api/v1/blogs";
   const { searchInput } = useContext(SearchContext);
 
+  // ------------------------------------------------======================---------------------------------------------------
 
+  // async function getUser() {
+  //   try {
+  //     const response = await axios.get(url);
+  //     // console.log(response);
+  //     setBlogData(response.data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
 
-  async function getUser() {
-    try {
-      const response = await axios.get(url);
-      // console.log(response);
-      setBlogData(response.data);
-    } catch (error) {
-      console.error(error);
+  // // console.log(blogData);
+
+  // useEffect(() => {
+  //   getUser();
+  // }, []);
+
+  // ===================================================-------------------------------=========================--------------
+
+  const myBloges = async () => {
+    const { data, error } = await supabase.from("Blogs").select("*");
+    console.log("🚀 ~ myBloges ~ data:", data);
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(data);
+      setBlogData(data);
     }
-  }
-
-  // console.log(blogData);
+  };
+ 
 
   useEffect(() => {
-    getUser();
+    myBloges();
   }, []);
 
-
-    // ===================================================
-
-  // const searchQuerry = inputData
-  // ? users.filter((user) =>
-  //     user.name.toLowerCase().includes(inputData.toLowerCase())
-  //   )
-  // : users;
-
-  // =======================================================
+  // ====================================================================
 
   const searchQuerry = searchInput
     ? blogData.filter((data) =>
@@ -48,9 +57,7 @@ const Blog = () => {
 
   return (
     <>
-     
       <Header />
->
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
         {searchQuerry.map((data, index) => (
           <>
@@ -60,7 +67,7 @@ const Blog = () => {
             >
               {/* Blog Image */}
               <img
-                src="https://via.placeholder.com/400x200"
+                src={data.image}
                 alt="Blog Post"
                 className="w-full h-48 object-cover"
               />
@@ -74,7 +81,7 @@ const Blog = () => {
 
                 {/* Short Description */}
                 <p className="mt-4 text-gray-600 line-clamp-3 w-55">
-                  {data.blogs}
+                  {data.description}
                 </p>
 
                 {/* id */}
@@ -94,7 +101,6 @@ const Blog = () => {
           </>
         ))}
       </div>
-
       <Footer />
     </>
   );
