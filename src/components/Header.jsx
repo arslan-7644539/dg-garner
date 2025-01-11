@@ -100,20 +100,20 @@ const Header = () => {
             Blog
           </NavLink>
           {session?.user?.id ? (
-            
-               <NavLink
-            to="/contact"
-            className={({ isActive }) =>
-              isActive
-                ? "text-yellow-400 font-semibold"
-                : "text-white hover:text-gray-300"
-            }
-          >
-            Contact
-          </NavLink>
-            
-          ) : ("")}
-       
+            <NavLink
+              to="/contact"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-yellow-400 font-semibold"
+                  : "text-white hover:text-gray-300"
+              }
+            >
+              Contact
+            </NavLink>
+          ) : (
+            ""
+          )}
+
           {!session?.user?.id ? (
             <>
               <Link
@@ -177,17 +177,22 @@ const Header = () => {
             >
               Blog
             </NavLink>
-            <NavLink
-              to="/contact"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={({ isActive }) =>
-                isActive
-                  ? "text-yellow-400 font-semibold"
-                  : "text-white hover:text-gray-300"
-              }
-            >
-              Contact
-            </NavLink>
+            {session?.user?.id ? (
+              <NavLink
+                to="/contact"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-yellow-400 font-semibold"
+                    : "text-white hover:text-gray-300"
+                }
+              >
+                Contact
+              </NavLink>
+            ) : (
+              ""
+            )}
+
             {!session?.user?.id ? (
               <>
                 <Link
