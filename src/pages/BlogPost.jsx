@@ -11,8 +11,6 @@ const BlogPost = () => {
   const { title } = useParams();
   // const location = useLocation()
 
-
-
   // ---------------=================-------------------------------------------
 
   // async function newUser() {
@@ -39,54 +37,42 @@ const BlogPost = () => {
       console.log(error);
     } else {
       console.log(data);
-      const blogPost = data.filter((blog)=> blog.title === title)
+      const blogPost = data.filter((blog) => blog.title === title);
       setNewBlogData(blogPost);
     }
   };
   useEffect(() => {
-    
-    myBloges()
-   
-  }, [title])
-  
-
+    myBloges();
+  }, [title]);
 
   // ----------------=================------------------------------------------
 
   return (
     <div>
       <Header />
-      {newBlogData.map((bloge, index)=> (
+      {newBlogData.map((bloge, index) => (
         <div key={index}>
-            
-             <article className=" group mt-32 w-full container mx-auto flex flex-col items-center ">
-                  <img
-                    alt=""
-                    src={bloge.image}
-                    className="h-56 w-[80%] rounded-xl object-cover shadow-xl transition group-hover:grayscale-[50%] "
-                  />
+          <article className=" group mt-32 w-full container mx-auto flex flex-col items-center ">
+            <img
+              alt=""
+              src={bloge.image}
+              className="h-56 w-[80%] rounded-xl object-cover shadow-xl transition group-hover:grayscale-[50%] "
+            />
 
-                  <div className="p-4">
-                    <a href="#">
-                      <h3 className="text-lg font-medium text-gray-900">
-                        {bloge.title}
-                   
-                      </h3>
-                    </a>
+            <div className="p-4">
+              <a href="#">
+                <h3 className="text-lg font-medium text-gray-900">
+                  {bloge.title}
+                </h3>
+              </a>
 
-                    <p className="mt-2  text-sm/relaxed text-gray-500">
-                      {bloge.description}
-                    </p>
-                  </div>
-                </article>
-
+              <p className="mt-2  text-sm/relaxed text-gray-500">
+                {bloge.description}
+              </p>
+            </div>
+          </article>
         </div>
-
       ))}
-
-     
-      
-    
 
       <Footer />
     </div>

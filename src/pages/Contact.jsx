@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import supabase from "../lib/supabase";
 import toast from "react-hot-toast";
+import { AuthContext } from "../components/AuthContext";
 
 const Contact = () => {
+  const {session} = useContext(AuthContext)
+  const uid = session?.user?.id
   const [feedback, setFeedback] = useState({
     name: "",
     email: "",
     message: "",
+    uid: uid || "",
   });
   // debugger
   const handleSubmit = async (e) => {
@@ -20,6 +24,7 @@ const Contact = () => {
           Name: feedback.name,
           Email: feedback.email,
           Message: feedback.message,
+          UID: feedback.uid
         },
       ])
       .select();
