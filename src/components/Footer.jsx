@@ -41,32 +41,29 @@ const Footer = () => {
 
             {/* Social Media Icons */}
             <div className="flex justify-center space-x-6 mt-4">
-              <Link>
+              <a href="https://github.com/arslan-7644539" target="_blank" >
                 <i>
-                  <FaGithub />{" "}
+                  <FaGithub />
                 </i>
-              </Link>
+              </a>
 
-              <Link>
+              <a href="https://www.facebook.com/profile.php?id=100023987348426" target="_blank" >
                 <i>
-                  {" "}
                   <FaFacebook />
                 </i>
-              </Link>
+              </a>
 
-              <Link>
+              <a href="#">
                 <i>
-                  {" "}
-                  <IoLogoLinkedin />{" "}
+                  <IoLogoLinkedin />
                 </i>
-              </Link>
+              </a>
 
-              <Link>
+              <a href="#">
                 <i>
-                  {" "}
-                  <BsTwitterX />{" "}
+                  <BsTwitterX />
                 </i>
-              </Link>
+              </a>
             </div>
           </div>
         </div>

@@ -11,7 +11,7 @@ const MyCards = ({ price, title, imageUrl, description }) => {
       />
       <div className="p-6">
         <h3 className="text-2xl font-semibold text-gray-800">{title}</h3>
-        <p className="mt-4 text-gray-600">{description}</p>
+        <p className="mt-4 text-gray-600 line-clamp-3 ">{description}</p>
         <p className="mt-4 text-xl font-semibold text-green-600">{price}</p>
         <Link
           to={`/${title}`}
