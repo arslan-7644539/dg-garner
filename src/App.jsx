@@ -1,16 +1,17 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
+import LoginForm from "./authFils/LogInForm";
+
+import { AuthProvider } from "./components/AuthContext";
+import { SearchProvider } from "./components/SearchContext";
 import About from "./pages/About";
 import Blog from "./pages/Blog";
-import Contact from "./pages/Contact";
 import BlogPost from "./pages/BlogPost";
-import ShopNow from "./pages/ShopNow";
-import { SearchProvider } from "./components/SearchContext";
-import SignUpForm from "./authFils/SignUpForm";
-import LoginForm from "./authFils/LogInForm";
-import { AuthProvider } from "./components/AuthContext";
+import Contact from "./pages/Contact";
+import Home from "./pages/Home";
 import ItemNotFound from "./pages/ItemNotFound";
+import ShopNow from "./pages/ShopNow";
+import { Login, Signup } from "./authFils";
 
 const App = () => {
   return (
@@ -23,8 +24,8 @@ const App = () => {
           <Route path="/blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/blog/:title" element={<BlogPost />} />
-          <Route path="/signup" element={<SignUpForm />} />
-          <Route path="/login" element={<LoginForm />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/*" element={<ItemNotFound />} />
         </Routes>
       </SearchProvider>
