@@ -1,4 +1,17 @@
+# netlify.toml
+
+[build]
+  base = ""                  # Root of the project
+  publish = "build"          # Folder where production build is located
+  command = "npm run build"  # Command to build the project
+
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+  from = "/old-blog"
+  to = "/new-blog"
+  status = 301               # Permanent redirect
+
+[[headers]]
+  for = "/static/*"          # Apply headers to static files
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+    X-Content-Type-Options = "nosniff"
