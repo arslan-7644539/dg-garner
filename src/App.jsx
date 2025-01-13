@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import LoginForm from "./authFils/LogInForm";
 
+import { Login, Signup } from "./authFils";
 import { AuthProvider } from "./components/AuthContext";
 import { SearchProvider } from "./components/SearchContext";
 import About from "./pages/About";
@@ -11,7 +11,6 @@ import Contact from "./pages/Contact";
 import Home from "./pages/Home";
 import ItemNotFound from "./pages/ItemNotFound";
 import ShopNow from "./pages/ShopNow";
-import { Login, Signup } from "./authFils";
 
 const App = () => {
   return (
