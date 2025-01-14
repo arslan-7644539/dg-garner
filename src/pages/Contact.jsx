@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import supabase from "../lib/supabase";
@@ -7,12 +7,14 @@ import { AuthContext } from "../components/AuthContext";
 
 const Contact = () => {
   const {session} = useContext(AuthContext)
+  // console.log("🚀 ~ Contact ~ session:", session)
   const uid = session?.user?.id
+  console.log("🚀 ~ Contact ~ uid:", uid)
   const [feedback, setFeedback] = useState({
     name: "",
     email: "",
     message: "",
-    uid: uid || "",
+    // uid: uid || "",
   });
   // debugger
   const handleSubmit = async (e) => {
@@ -24,10 +26,11 @@ const Contact = () => {
           Name: feedback.name,
           Email: feedback.email,
           Message: feedback.message,
-          UID: feedback.uid
+          UID: uid
         },
       ])
       .select();
+    console.log("🚀 ~ handleSubmit ~ data:", data)
     if (error) {
       console.log(error);
       toast.error("Something went wrong!", {
@@ -45,6 +48,12 @@ const Contact = () => {
       });
     }
   };
+
+  // useEffect(() => {
+    
+  //   setFeedback()
+  // }, [session])
+  
 
   return (
     <div>
