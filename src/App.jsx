@@ -18,6 +18,9 @@ import ProductManagement from "./Admin/Components/ProductManagement";
 import Profaile from "./Admin/pages/Profaile";
 import BlogManagement from "./Admin/Components/BlogManagement";
 import Messages from "./Admin/pages/Messages";
+import AddBlog from "./Admin/pages/AddBlog";
+import AddItems from "./Admin/Components/AddItems";
+import AddUser from "./Admin/Components/AddUser";
 
 
 const App = () => {
@@ -37,10 +40,12 @@ const App = () => {
           {/* admin side */}
          <Route path="/admin" element={<AdminHome />} />
           <Route path="/users" element={<UserTable />} />
+          <Route path="/users/:addUser" element={<AddUser />} />
           <Route path="/production" element={<ProductManagement />} />
+          <Route path="/production/:addItems" element={<AddItems />} />
           <Route path="/profile" element={<Profaile />} />
           <Route path="/blogs" element={<BlogManagement />} />
-         
+          <Route path="/blogs/:addBlog" element={<AddBlog />} />
           <Route path="/item" element={<ProductManagement />} />
           <Route path="/feedback" element={<Messages />} />
         </Routes>

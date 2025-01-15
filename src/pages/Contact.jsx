@@ -9,12 +9,12 @@ const Contact = () => {
   const {session} = useContext(AuthContext)
   // console.log("🚀 ~ Contact ~ session:", session)
   const uid = session?.user?.id
-  console.log("🚀 ~ Contact ~ uid:", uid)
+  // console.log("🚀 ~ Contact ~ uid:", uid)
   const [feedback, setFeedback] = useState({
     name: "",
     email: "",
     message: "",
-    // uid: uid || "",
+    uid: uid || "",
   });
   // debugger
   const handleSubmit = async (e) => {
@@ -26,7 +26,7 @@ const Contact = () => {
           Name: feedback.name,
           Email: feedback.email,
           Message: feedback.message,
-          UID: uid
+          UID: feedback.uid
         },
       ])
       .select();
@@ -49,10 +49,13 @@ const Contact = () => {
     }
   };
 
-  // useEffect(() => {
+  useEffect(() => {
+    if(session?.user?.id){
+      setFeedback({uid: uid  })
+    }
     
-  //   setFeedback()
-  // }, [session])
+    // setFeedback()
+  }, [session])
   
 
   return (

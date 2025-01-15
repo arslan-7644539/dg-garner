@@ -1,48 +1,10 @@
 import React, { useEffect, useState } from "react";
 import AdminNavbar from "../Components/AdminNavbar";
 import supabase from "../../lib/supabase";
+import { Link } from "react-router-dom";
 
 const AdminBlogTable = () => {
   const [blogs, setBlogs] = useState([]);
-  const [isAdding, setIsAdding] = useState(false);
-
-  // const [newBlog, setNewBlog] = useState({
-  //   title: "",
-  //   description: "",
-  //   content: "",
-  //   image: null,
-  // });
-
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setNewBlog({ ...newBlog, [name]: value });
-  // };
-
-  // const handleImageChange = (e) => {
-  //   const file = e.target.files[0];
-  //   setNewBlog({ ...newBlog, image: file });
-  // };
-
-  // const handleAddBlog = () => {
-  //   if (
-  //     newBlog.title &&
-  //     newBlog.description &&
-  //     newBlog.content &&
-  //     newBlog.image
-  //   ) {
-  //     setBlogs([...blogs, newBlog]);
-  //     setNewBlog({
-  //       title: "",
-  //       description: "",
-  //       content: "",
-  //       image: null,
-  //     });
-  //     setIsAdding(false);
-  //     alert("Blog added successfully!");
-  //   } else {
-  //     alert("Please fill in all fields and upload an image.");
-  //   }
-  // };
 
   const blogData = async () => {
     const { data, error } = await supabase.from("Blogs").select("*");
@@ -56,18 +18,19 @@ const AdminBlogTable = () => {
   };
 
   useEffect(() => {
-    blogData()
-  }, [])
-  
-  
+    blogData();
+  }, []);
 
   return (
     <>
       <AdminNavbar />
       <div className="p-8 bg-gray-100 min-h-screen">
-        <h1 className="text-3xl font-bold mb-6 text-center text-blue-600">
-          Blog Post
-        </h1>
+        <div>
+          <h1 className="text-3xl font-bold mb-6 text-center text-blue-600">
+            Blog Post
+          </h1>
+        </div>
+        <br />
 
         {/* Blog Table */}
         <div className="overflow-x-auto bg-white shadow-md rounded-lg">
@@ -116,18 +79,8 @@ const AdminBlogTable = () => {
           </table>
         </div>
 
-        {/* Add New Blog Button */}
-        {!isAdding && (
-          <button
-            className="mt-6 px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-            onClick={() => setIsAdding(true)}
-          >
-            Add New Blog
-          </button>
-        )}
-
         {/* Add New Blog Section */}
-        {isAdding && (
+        {/* {isAdding && (
           <div className="mt-8 p-6 bg-white shadow-md rounded-lg">
             <h2 className="text-xl font-semibold text-blue-600 mb-4">
               Add New Blog
@@ -141,7 +94,7 @@ const AdminBlogTable = () => {
                 placeholder="Title"
                 className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-               <input
+              <input
                 type="text"
                 name="title"
                 value={newBlog.author}
@@ -175,7 +128,7 @@ const AdminBlogTable = () => {
             <div className="flex items-center gap-4 mt-4">
               <button
                 className="px-6 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-                onClick={handleAddBlog}
+                onClick={blogPublish}
               >
                 Publish
               </button>
@@ -187,7 +140,7 @@ const AdminBlogTable = () => {
               </button>
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </>
   );

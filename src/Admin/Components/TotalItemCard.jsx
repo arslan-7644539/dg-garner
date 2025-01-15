@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { FaBox } from "react-icons/fa";
+import { FaBox, FaPlusCircle } from "react-icons/fa";
 import supabase from "../../lib/supabase";
+import { Link } from "react-router-dom";
 
 const TotalItemCard = () => {
   const [totalItems, setTotalItems] = useState(null);
@@ -28,6 +29,13 @@ const TotalItemCard = () => {
         <p className="text-lg text-gray-600"> {totalItems} </p>
       </div>
       <FaBox className=" cursor-pointer text-4xl text-blue-600" />
+      <Link
+        to="/production/:addItems"
+        className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition"
+      >
+        <FaPlusCircle className="text-lg" />
+        Create
+      </Link>
     </div>
   );
 };

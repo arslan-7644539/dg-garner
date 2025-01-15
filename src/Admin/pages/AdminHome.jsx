@@ -4,6 +4,7 @@ import AdminNavbar from "../Components/AdminNavbar";
 
 import TotalItemCard from "../Components/TotalItemCard";
 import TotalUserCard from "../Components/TotalUserCard";
+import AddPost from "../Components/AddPost";
 
 const AdminHomePage = () => {
   return (
@@ -21,6 +22,7 @@ const AdminHomePage = () => {
             <TotalItemCard />
 
             <TotalUserCard />
+            <AddPost/>
           </div>
         </div>
       </div>

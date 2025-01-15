@@ -24,7 +24,7 @@ const SignUpForm = () => {
 // debugger
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
+    // console.log("Form Data Submitted:", formData);
     const { data:signUpData, error:signUpError } = await supabase.auth.signUp({
       email: formData.email,
       password: formData.password,
