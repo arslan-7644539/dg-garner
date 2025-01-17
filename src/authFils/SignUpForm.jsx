@@ -1,13 +1,10 @@
 import React, { useState } from "react";
-import { data, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import supabase from "../lib/supabase";
-import toast, { ToastBar } from "react-hot-toast";
-import { GiToaster } from "react-icons/gi";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import toast from "react-hot-toast";
 
 const SignUpForm = () => {
-    const navigate =useNavigate()
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -21,25 +18,26 @@ const SignUpForm = () => {
       [name]: value,
     });
   };
-// debugger
+  // debugger
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log("Form Data Submitted:", formData);
-    const { data:signUpData, error:signUpError } = await supabase.auth.signUp({
-      email: formData.email,
-      password: formData.password,
-      options: {
-        emailRedirectTo : "http://localhost:5173/login",
-        
-      },
-    });
+    const { data: signUpData, error: signUpError } = await supabase.auth.signUp(
+      {
+        email: formData.email,
+        password: formData.password,
+        options: {
+          emailRedirectTo: "http://localhost:5173/login",
+        },
+      }
+    );
     // console.log("🚀 ~ handleSubmit ~ data:", signUpData)
     if (signUpError) {
       console.log(signUpError);
     } else {
-        console.log(signUpData);
+      console.log(signUpData);
 
-      const { data:insertData, error:insertError } = await supabase
+      const { data: insertData, error: insertError } = await supabase
         .from("users")
         .insert([
           {
@@ -61,16 +59,14 @@ const SignUpForm = () => {
         email: "",
         password: "",
       });
-      toast.success('Successfully SignUp!', {
-        position:"top-right"
-      })
-      navigate("/login")
+      toast.success("Successfully SignUp!", {
+        position: "top-right",
+      });
+      navigate("/login");
     }
   };
 
   return (
-    <>
-    <Header/>
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-500 px-4">
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
         <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">
@@ -156,8 +152,6 @@ const SignUpForm = () => {
         </p>
       </div>
     </div>
-    <Footer/>
-    </>
   );
 };
 

@@ -1,6 +1,4 @@
 import React, { useState, useContext } from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import { useNavigate, useParams } from "react-router-dom";
 import { CardContext } from "../components/CardContext";
 import OrderForm from "../components/OrderForm";
@@ -48,63 +46,59 @@ const ShopNow = () => {
   };
 
   return (
-    <div>
-      <Header /> {/* Fixed Header */}
-      <div className="bg-gray-50 py-10">
-        <div className="container mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 px-5">
-          {cardResult.map((card, index) => (
-            <>
-              {/* Left Side: Product Image and Details */}
-              <div
-                key={`left-${index}`}
-                className="lg:col-span-7  rounded-lg  overflow-hidden"
-              >
-                <img
-                  src={card.imageUrl}
-                  alt={card.title}
-                  className="w-full h-96 object-cover"
-                />
-                <div className="p-6">
-                  <h3 className="text-3xl font-bold text-gray-800 mb-4">
-                    {card.title}
-                  </h3>
-                  <p className="text-lg text-gray-600 mb-4 leading-relaxed">
-                    {card.description}
-                  </p>
-                  <p className="text-2xl font-bold text-green-600">
-                    {card.price}
-                  </p>
-                </div>
+    <div className="bg-gray-50 py-10">
+      <div className="container mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 px-5">
+        {cardResult.map((card, index) => (
+          <>
+            {/* Left Side: Product Image and Details */}
+            <div
+              key={`left-${index}`}
+              className="lg:col-span-7  rounded-lg  overflow-hidden"
+            >
+              <img
+                src={card.imageUrl}
+                alt={card.title}
+                className="w-full h-96 object-cover"
+              />
+              <div className="p-6">
+                <h3 className="text-3xl font-bold text-gray-800 mb-4">
+                  {card.title}
+                </h3>
+                <p className="text-lg text-gray-600 mb-4 leading-relaxed">
+                  {card.description}
+                </p>
+                <p className="text-2xl font-bold text-green-600">
+                  {card.price}
+                </p>
               </div>
+            </div>
 
-              {/* Right Side: Purchase Section */}
-              <div
-                key={`right-${index}`}
-                className={`lg:col-span-5  rounded-lg  p-6 flex flex-col justify-center transition-all duration-500 ease-in-out ${
-                  showForm ? "" : "h-auto"
-                }`}
-              >
-                {showForm ? (
-                  <OrderForm itemTitle={itemTitle} uid={uid} />
-                ) : (
-                  <div className="flex flex-col items-center">
-                    <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                      Ready to Purchase?
-                    </h3>
-                    <button
-                      onClick={handleBuyNowClick}
-                      className="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg hover:bg-blue-700 transition-colors duration-300"
-                    >
-                      Buy Now
-                    </button>
-                  </div>
-                )}
-              </div>
-            </>
-          ))}
-        </div>
+            {/* Right Side: Purchase Section */}
+            <div
+              key={`right-${index}`}
+              className={`lg:col-span-5  rounded-lg  p-6 flex flex-col justify-center transition-all duration-500 ease-in-out ${
+                showForm ? "" : "h-auto"
+              }`}
+            >
+              {showForm ? (
+                <OrderForm itemTitle={itemTitle} uid={uid} />
+              ) : (
+                <div className="flex flex-col items-center">
+                  <h3 className="text-xl font-semibold text-gray-800 mb-4">
+                    Ready to Purchase?
+                  </h3>
+                  <button
+                    onClick={handleBuyNowClick}
+                    className="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg hover:bg-blue-700 transition-colors duration-300"
+                  >
+                    Buy Now
+                  </button>
+                </div>
+              )}
+            </div>
+          </>
+        ))}
       </div>
-      <Footer /> {/* Relative Footer */}
     </div>
   );
 };

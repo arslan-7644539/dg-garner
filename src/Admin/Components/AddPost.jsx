@@ -30,7 +30,7 @@ const AddPost = () => {
         <p className="text-lg text-gray-600">{allNewPost}</p>
       </div>
       <Link
-        to="/blogs/:addBlog"
+        to="/superUser/addBlog"
         // onClick={handleAddPost}
         className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition"
       >

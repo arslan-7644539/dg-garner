@@ -32,7 +32,7 @@ const TotalUserCard = () => {
     </div>
     <FaUsers className="text-4xl text-green-600" />
     <Link
-        to="/users/:addUser"
+        to="/superUser/addUser"
         className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition"
       >
         <FaPlusCircle className="text-lg" />

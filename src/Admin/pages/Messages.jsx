@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import supabase from "../../lib/supabase";
-import AdminNavbar from "../Components/AdminNavbar";
 
 const Messages = () => {
   const [messages, setMessages] = useState([
@@ -35,18 +34,14 @@ const Messages = () => {
       console.log(data);
       setMessages(data);
     }
-      console.log("🚀 ~ userFeedback ~ data:", data)
+    console.log("🚀 ~ userFeedback ~ data:", data);
   };
 
-   useEffect(() => {
-    userFeedback()
-
-   }, [])
-   
+  useEffect(() => {
+    userFeedback();
+  }, []);
 
   return (
-    <>
-    <AdminNavbar/>
     <div className="max-w-7xl mx-auto px-6 py-12">
       {/* Heading Section */}
       <div className="text-center mb-8">
@@ -98,7 +93,6 @@ const Messages = () => {
         </table>
       </div>
     </div>
-    </>
   );
 };
 

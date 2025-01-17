@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import AdminNavbar from "../Components/AdminNavbar";
 import supabase from "../../lib/supabase";
-import { Link } from "react-router-dom";
 
 const AdminBlogTable = () => {
   const [blogs, setBlogs] = useState([]);
@@ -22,65 +20,61 @@ const AdminBlogTable = () => {
   }, []);
 
   return (
-    <>
-      <AdminNavbar />
-      <div className="p-8 bg-gray-100 min-h-screen">
-        <div>
-          <h1 className="text-3xl font-bold mb-6 text-center text-blue-600">
-            Blog Post
-          </h1>
-        </div>
-        <br />
+    <div className="p-8 bg-gray-100 min-h-screen">
+      <div>
+        <h1 className="text-3xl font-bold mb-6 text-center text-blue-600">
+          Blog Post
+        </h1>
+      </div>
+      <br />
 
-        {/* Blog Table */}
-        <div className="overflow-x-auto bg-white shadow-md rounded-lg">
-          <table className="w-full table-auto border-collapse border border-gray-300">
-            <thead className="bg-blue-500 text-white">
-              <tr>
-                <th className="px-4 py-3 border border-gray-300">Title</th>
-                <th className="px-4 py-3 border border-gray-300">
-                  Description
-                </th>
-                <th className="px-4 py-3 border border-gray-300">Author</th>
-                <th className="px-4 py-3 border border-gray-300">Image</th>
+      {/* Blog Table */}
+      <div className="overflow-x-auto bg-white shadow-md rounded-lg">
+        <table className="w-full table-auto border-collapse border border-gray-300">
+          <thead className="bg-blue-500 text-white">
+            <tr>
+              <th className="px-4 py-3 border border-gray-300">Title</th>
+              <th className="px-4 py-3 border border-gray-300">Description</th>
+              <th className="px-4 py-3 border border-gray-300">Author</th>
+              <th className="px-4 py-3 border border-gray-300">Image</th>
+            </tr>
+          </thead>
+          <tbody>
+            {blogs.map((blog, index) => (
+              <tr
+                key={blog.id}
+                className={`${
+                  index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                } hover:bg-blue-100`}
+              >
+                <td className="px-4 py-3 border border-gray-300 truncate  ">
+                  {blog.title}
+                </td>
+                <td className="px-4 py-3 border border-gray-300  line-clamp-3">
+                  {blog.description}
+                </td>
+                <td className="px-4 py-3 border border-gray-300 truncate max-w-md">
+                  {blog.author}
+                </td>
+                <td className="px-4 py-3 border border-gray-300">
+                  {blog.image ? (
+                    <img
+                      src={blog.image}
+                      alt={blog.title}
+                      className="h-16 w-16 object-cover rounded"
+                    />
+                  ) : (
+                    "No image"
+                  )}
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {blogs.map((blog, index) => (
-                <tr
-                  key={blog.id}
-                  className={`${
-                    index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                  } hover:bg-blue-100`}
-                >
-                  <td className="px-4 py-3 border border-gray-300 truncate  ">
-                    {blog.title}
-                  </td>
-                  <td className="px-4 py-3 border border-gray-300  line-clamp-3">
-                    {blog.description}
-                  </td>
-                  <td className="px-4 py-3 border border-gray-300 truncate max-w-md">
-                    {blog.author}
-                  </td>
-                  <td className="px-4 py-3 border border-gray-300">
-                    {blog.image ? (
-                      <img
-                        src={blog.image}
-                        alt={blog.title}
-                        className="h-16 w-16 object-cover rounded"
-                      />
-                    ) : (
-                      "No image"
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-        {/* Add New Blog Section */}
-        {/* {isAdding && (
+      {/* Add New Blog Section */}
+      {/* {isAdding && (
           <div className="mt-8 p-6 bg-white shadow-md rounded-lg">
             <h2 className="text-xl font-semibold text-blue-600 mb-4">
               Add New Blog
@@ -141,8 +135,7 @@ const AdminBlogTable = () => {
             </div>
           </div>
         )} */}
-      </div>
-    </>
+    </div>
   );
 };
 
