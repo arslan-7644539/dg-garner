@@ -48,7 +48,7 @@ const AdminNavbar = () => {
         <nav className="bg-gradient-to-r from-blue-500 to-purple-500 shadow-md relative top-0 w-full z-10">
           <div className="container mx-auto flex items-center justify-between px-6 py-4 ">
             <Link
-              to="/"
+              // to="/"
               className="text-white hover:text-yellow-400 text-2xl font-bold"
             >
               DG Garner
