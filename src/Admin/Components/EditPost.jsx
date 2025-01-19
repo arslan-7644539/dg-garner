@@ -1,10 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import supabase from "../../lib/supabase";
 import toast from "react-hot-toast";
+import supabase from "../../lib/supabase";
 import { AuthContext } from "../../components/AuthContext";
+import { useNavigate, useParams } from "react-router-dom";
 
-const AddBlog = () => {
-  const { session, adminInfo } = useContext(AuthContext);
+const EditPost = () => {
+  const { id } = useParams();
+
+  const navigate = useNavigate();
+  const { session } = useContext(AuthContext);
   const UID = session?.user?.id;
   const [formData, setFormData] = useState({
     title: "",
@@ -27,49 +31,58 @@ const AddBlog = () => {
 
     const { data, error } = await supabase
       .from("Blogs")
-      .insert([
-        {
-          title: formData.title,
-          description: formData.description,
-          author: formData.authorName,
-          authorImage: formData.authorImage,
-          image: formData.imageUrl,
-          uid: UID,
-        },
-      ])
+      .update({
+        title: formData.title,
+        description: formData.description,
+        author: formData.authorName,
+        authorImage: formData.authorImage,
+        image: formData.imageUrl,
+        uid: UID,
+      })
+      .eq("id", id)
       .select();
     if (error) {
       console.log(error);
-      alert("try again");
     } else {
       console.log(data);
-      toast.success("Post Published!", {
+      toast.success("Saved Changes", {
         position: "top-right",
       });
+      navigate("/blogs");
+    }
+  };
+  //   ================================================= fetch blog data
+
+  const fetchBlog = async () => {
+    const { data, error } = await supabase
+      .from("Blogs")
+      .select("*")
+      .eq("id", id)
+      .single();
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(data);
       setFormData({
-        title: "",
-        description: "",
-        authorName: "",
-        imageUrl: "",
-        authorImage: "",
+        title: data.title,
+        description: data.description,
+        authorName: data.author,
+        imageUrl: data.image,
+        authorImage: data.authorImage,
       });
     }
+    // console.log("🚀 ~ fetchBlog ~ data:", data);
   };
 
   useEffect(() => {
-    if (adminInfo.role === "user") {
-      setFormData({
-        authorName: adminInfo.username,
-        authorImage: adminInfo.userImage,
-      });
-    }
+    fetchBlog();
   }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 py-10 px-4 flex justify-center">
       <div className="w-full max-w-5xl bg-white rounded-lg shadow-md p-8">
         <h1 className="text-4xl font-bold text-gray-800 mb-6 text-center">
-          Add New Blog Post
+          Post Editor
         </h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Blog Title and Author */}
@@ -178,7 +191,7 @@ const AddBlog = () => {
               type="submit"
               className="bg-blue-600 text-white font-medium py-3 px-8 rounded-lg shadow-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
-              Publish Blog
+              Save Changes
             </button>
           </div>
         </form>
@@ -187,4 +200,4 @@ const AddBlog = () => {
   );
 };
 
-export default AddBlog;
+export default EditPost;

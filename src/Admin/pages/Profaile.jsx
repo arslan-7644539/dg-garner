@@ -21,7 +21,7 @@ const Profaile = () => {
               <h3 className="text-3xl font-semibold text-gray-800">
                 {adminInfo.username}
               </h3>
-              <p className="text-lg text-gray-500">Administrator</p>
+              <p className="text-lg text-gray-500">{adminInfo.role}</p>
             </div>
           </div>
           <div className="space-y-4">

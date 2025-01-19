@@ -12,11 +12,10 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSession(session);
-     
     });
-      console.log("🚀 ~ supabase.auth.getSession ~ session:", session)
+    console.log("🚀 ~ supabase.auth.getSession ~ session:", session);
   }, []);
- 
+
   useEffect(() => {
     const newAdmin = async () => {
       if (session) {
@@ -25,7 +24,7 @@ export function AuthProvider({ children }) {
           .select("*")
           .eq("uid", session?.user?.id)
           .single();
-          setAdminInfo(data)
+        setAdminInfo(data);
       }
     };
     newAdmin();

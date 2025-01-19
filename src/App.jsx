@@ -23,6 +23,8 @@ import AddUser from "./Admin/Components/AddUser";
 import EditProfile from "./Admin/Components/EditProfile";
 import SuperUser from "./SuperUser";
 import Frontend from "./frontend/Frontend";
+import UserProfile from "./UserDashbord/pages/UserProfile";
+import EditPost from "./Admin/Components/EditPost";
 
 const App = () => {
   return (
@@ -32,18 +34,21 @@ const App = () => {
           {/* Frontend Side */}
           <Route path="/" element={<Frontend />}>
             <Route index element={<Home />} />
-            <Route path="ShopNow" element={<ShopNow />} />
+            <Route path=":ShopNow" element={<ShopNow />} />
             <Route path="about" element={<About />} />
             <Route path="blog" element={<Blog />} />
             <Route path="contact" element={<Contact />} />
             <Route path="blog/:title" element={<BlogPost />} />
-            <Route path="signup" element={<Signup />} />
-            <Route path="login" element={<Login />} />
+            <Route path="blogs" element={<BlogManagement />} />
+            <Route path="blogs/:id" element={<EditPost />} />
+            <Route path="addBlog" element={<AddBlog />} />
+            <Route path="userProfile" element={<UserProfile />} />
+            <Route path="editProfile" element={<EditProfile />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
           </Route>
 
-          {/*  */}
           <Route path="*" element={<ItemNotFound />} />
-          {/*  */}
 
           {/* admin Side */}
           <Route path="/superUser" element={<SuperUser />}>
@@ -55,7 +60,6 @@ const App = () => {
             <Route path="profile" element={<Profaile />} />
             <Route path="editProfile" element={<EditProfile />} />
             <Route path="blogs" element={<BlogManagement />} />
-            <Route path="addBlog" element={<AddBlog />} />
             <Route path="item" element={<ProductManagement />} />
             <Route path="feedback" element={<Messages />} />
           </Route>

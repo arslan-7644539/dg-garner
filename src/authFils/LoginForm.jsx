@@ -20,14 +20,11 @@ const LoginForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    // debugger
     e.preventDefault();
-
-    const { data: loginData, error: loginError } =
-      await supabase.auth.signInWithPassword({
-        email: formData.email,
-        password: formData.password,
-      });
+    const { error: loginError } = await supabase.auth.signInWithPassword({
+      email: formData.email,
+      password: formData.password,
+    });
     if (loginError) {
       console.log(loginError);
       toast.error("Incorrect password.", {
@@ -35,7 +32,6 @@ const LoginForm = () => {
       });
       return;
     }
-    // filter method for user role
 
     let { data: users, error } = await supabase
       .from("users")

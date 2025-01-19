@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import supabase from "../../lib/supabase";
 import toast from "react-hot-toast";
@@ -6,24 +6,38 @@ import { AuthContext } from "../../components/AuthContext";
 
 const AdminNavbar = () => {
   const navigate = useNavigate();
-  const { adminInfo, session , setSession} = useContext(AuthContext);
+  const { adminInfo, setSession } = useContext(AuthContext);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null); // Ref for dropdown container
 
   // Function to toggle dropdown
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
-  // Function to handle sign out
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   async function signOut() {
     const { error } = await supabase.auth.signOut();
 
     if (!error) {
-      toast.success("Successfully Log Out!", {
+      toast.success("Successfully Logged Out!", {
         position: "top-right",
       });
       navigate("/");
-      setSession(null)
+      setSession(null);
     }
   }
 
@@ -108,7 +122,7 @@ const AdminNavbar = () => {
               </div>
 
               {/* Admin Info */}
-              <div className="relative">
+              <div className="relative" ref={dropdownRef}>
                 <img
                   src={adminInfo?.userImage}
                   alt="Admin Profile"

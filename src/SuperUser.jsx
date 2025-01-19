@@ -12,7 +12,6 @@ const SuperUser = () => {
     if (adminInfo) {
       if (adminInfo.role === "admin") {
         setadmin(true);
-        // navigate("/superUser/admin")
       } else if (adminInfo.role === "user" || adminInfo.role === null) {
         setadmin(false);
         navigate("/");

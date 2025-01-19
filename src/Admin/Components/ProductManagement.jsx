@@ -1,14 +1,27 @@
 import React, { useContext } from "react";
 import { CardContext } from "../../components/CardContext";
+import { Link } from "react-router-dom";
+import { FaPlusCircle } from "react-icons/fa";
 
 const AdminProductTable = () => {
   const { cardData } = useContext(CardContext);
 
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-center text-blue-600">
-        Production
-      </h1>
+      <div className="flex  justify-between">
+        <h1 className="text-3xl font-bold mb-6 text-center text-blue-600">
+          Production
+        </h1>
+
+        <Link
+          to="/superUser/addItems"
+          className="flex items-center gap-5 bg-blue-600 text-white px-8 py-2 rounded-lg shadow hover:bg-blue-700 transition"
+        >
+          <FaPlusCircle className="text-lg" />
+          Create
+        </Link>
+      </div>
+      <br />
 
       {/* Product Table */}
       <div className="overflow-x-auto bg-white shadow-md rounded-lg">

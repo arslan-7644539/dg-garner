@@ -14,6 +14,7 @@ const MyCards = ({ price, title, imageUrl, description }) => {
         <p className="mt-4 text-gray-600 line-clamp-3 ">{description}</p>
         <p className="mt-4 text-xl font-semibold text-green-600">{price}</p>
         <Link
+        
           to={`/${title}`}
           className="mt-4 inline-block text-white bg-blue-600 px-6 py-2 rounded-full hover:bg-blue-700"
         >

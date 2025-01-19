@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import supabase from "../../lib/supabase";
+import { Link } from "react-router-dom";
+import { FaPlusCircle } from "react-icons/fa";
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
@@ -24,13 +26,24 @@ const UserManagement = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      {/* Header */}
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">User Management</h1>
+      <div className="flex justify-between">
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">
+          User Management
+        </h1>
+        <Link
+          to="/superUser/addUser"
+          className="flex items-center gap-5 bg-blue-600 text-white px-8  py-2 rounded-lg shadow hover:bg-blue-700 transition"
+        >
+          <FaPlusCircle className="text-lg" />
+          Add
+        </Link>
+      </div>
+      <br />
 
       {/* User Table */}
       <div className="overflow-x-auto">
         <table className="w-full text-sm text-left border-collapse bg-white shadow-md border border-gray-300">
-          <thead className="bg-gray-200 text-gray-800">
+          <thead className="bg-[#2563EB] text-white">
             <tr>
               <th className="px-4 py-3 font-semibold text-sm">Username</th>
               <th className="px-4 py-3 font-semibold text-sm">UUID</th>

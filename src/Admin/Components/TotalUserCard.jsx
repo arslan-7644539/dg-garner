@@ -30,14 +30,11 @@ const TotalUserCard = () => {
       <h2 className="text-2xl font-semibold text-gray-800">Total Users</h2>
       <p className="text-lg text-gray-600">{totalUsers}</p> {/* Example data */}
     </div>
-    <FaUsers className="text-4xl text-green-600" />
-    <Link
-        to="/superUser/addUser"
-        className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition"
-      >
-        <FaPlusCircle className="text-lg" />
-        Add Users
-      </Link>
+    <Link to="/superUser/users">
+    
+    <FaUsers className="text-4xl text-green-600 cursor-pointer" />
+    </Link>
+    
   </div>
   )
 }

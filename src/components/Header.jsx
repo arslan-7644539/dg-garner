@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { SearchContext } from "./SearchContext";
 import supabase from "../lib/supabase";
@@ -8,24 +8,41 @@ import { AuthContext } from "./AuthContext";
 const Header = () => {
   const { searchInput, setSearchInput } = useContext(SearchContext);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+  const dropdownRef = useRef(null); // Ref for dropdown
   const navigate = useNavigate();
-
-  const { session } = useContext(AuthContext);
+  const { session, setSession, adminInfo } = useContext(AuthContext);
 
   async function signOut() {
     const { error } = await supabase.auth.signOut();
 
     if (!error) {
-      toast.success("Successfully Log Out!", {
+      toast.success("Successfully Logged Out!", {
         position: "top-right",
       });
       navigate("/");
+      setSession(null);
     }
   }
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
   return (
-    <header className="bg-gradient-to-r from-blue-500 to-purple-500 shadow-md fixed top-0 w-full z-10">
+    <header className="bg-gradient-to-r from-blue-500 to-purple-500 shadow-md relative top-0 w-full z-10">
       <div className="container mx-auto flex items-center justify-between px-6 py-4">
         {/* Logo */}
         <Link
@@ -68,7 +85,7 @@ const Header = () => {
         </div>
 
         {/* Navigation Links */}
-        <nav className="hidden md:flex space-x-8">
+        <nav className="hidden md:flex space-x-8 items-center">
           <NavLink
             to="/"
             className={({ isActive }) =>
@@ -99,7 +116,7 @@ const Header = () => {
           >
             Blog
           </NavLink>
-          {session?.user?.id ? (
+          {session?.user?.id && (
             <NavLink
               to="/contact"
               className={({ isActive }) =>
@@ -110,8 +127,6 @@ const Header = () => {
             >
               Contact
             </NavLink>
-          ) : (
-            ""
           )}
 
           {!session?.user?.id ? (
@@ -130,12 +145,60 @@ const Header = () => {
               </Link>
             </>
           ) : (
-            <button
-              onClick={signOut}
-              className="px-4 py-2 bg-red-500 text-white rounded-full font-semibold hover:bg-red-600"
-            >
-              Logout
-            </button>
+            <div className="relative" ref={dropdownRef}>
+              { adminInfo.role === "user" ? (
+                <img
+                  src={adminInfo.userImage}
+                  alt="User"
+                  className="w-10 h-10 rounded-full cursor-pointer"
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                />
+              ) : (
+                <img
+                  // src={adminInfo.userImage}
+                  alt="User"
+                  className="w-10 h-10 rounded-full cursor-pointer"
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                />
+              )}
+
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2">
+                  {adminInfo.role === "user" ? (
+                    <p className="block px-4 py-2 text-sm text-gray-700 font-semibold border-b">
+                      Hello, {adminInfo.username}!
+                    </p>
+                  ) : (
+                    <p className="block px-4 py-2 text-sm text-gray-700 font-semibold border-b">
+                      Hello, User!
+                    </p>
+                  )}
+
+                  <Link
+                    to="/userProfile"
+                    className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    Profile
+                  </Link>
+                  <Link
+                    className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                    to="blogs"
+                  >
+                    Blog Post
+                  </Link>
+                  <button
+                    onClick={() => {
+                      signOut();
+                      setIsDropdownOpen(false);
+                    }}
+                    className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
           )}
         </nav>
       </div>
@@ -177,7 +240,7 @@ const Header = () => {
             >
               Blog
             </NavLink>
-            {session?.user?.id ? (
+            {session?.user?.id && (
               <NavLink
                 to="/contact"
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -189,8 +252,6 @@ const Header = () => {
               >
                 Contact
               </NavLink>
-            ) : (
-              ""
             )}
 
             {!session?.user?.id ? (

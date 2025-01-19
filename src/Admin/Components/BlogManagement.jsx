@@ -1,17 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import supabase from "../../lib/supabase";
+import { Link } from "react-router-dom";
+import { FaPlusCircle, FaEdit, FaTrash } from "react-icons/fa";
+import { AuthContext } from "../../components/AuthContext";
 
 const AdminBlogTable = () => {
+  //  const {Id} = useParams()
   const [blogs, setBlogs] = useState([]);
+  const { adminInfo, session } = useContext(AuthContext);
+  const UID = session?.user?.id;
 
   const blogData = async () => {
     const { data, error } = await supabase.from("Blogs").select("*");
-    // console.log("🚀 ~ blogData ~ data:", data)
     if (error) {
       console.log(error);
     } else {
       console.log(data);
       setBlogs(data);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    const { error } = await supabase.from("Blogs").delete().eq("id", id);
+    if (error) {
+      console.error("Error deleting blog:", error);
+    } else {
+      alert("Confirm you delete this post");
+      setBlogs(blogs.filter((blog) => blog.id !== id));
     }
   };
 
@@ -22,9 +37,22 @@ const AdminBlogTable = () => {
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
       <div>
-        <h1 className="text-3xl font-bold mb-6 text-center text-blue-600">
-          Blog Post
-        </h1>
+        <div className="flex justify-between">
+          <h1 className="text-3xl font-bold mb-6 text-center text-blue-600">
+            Blog Post
+          </h1>
+          {adminInfo.role === "user" ? (
+            <Link
+              to="/addBlog"
+              className="flex items-center gap-2 bg-blue-600 text-white px-8 py-2 rounded-lg shadow hover:bg-blue-700 transition"
+            >
+              <FaPlusCircle className="text-lg" />
+              Add Post
+            </Link>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
       <br />
 
@@ -36,6 +64,7 @@ const AdminBlogTable = () => {
               <th className="px-4 py-3 border border-gray-300">Title</th>
               <th className="px-4 py-3 border border-gray-300">Description</th>
               <th className="px-4 py-3 border border-gray-300">Author</th>
+              <th className="px-4 py-3 border border-gray-300">Actions</th>
               <th className="px-4 py-3 border border-gray-300">Image</th>
             </tr>
           </thead>
@@ -47,14 +76,35 @@ const AdminBlogTable = () => {
                   index % 2 === 0 ? "bg-white" : "bg-gray-50"
                 } hover:bg-blue-100`}
               >
-                <td className="px-4 py-3 border border-gray-300 truncate  ">
+                <td className="px-4 py-3 border border-gray-300 truncate">
                   {blog.title}
                 </td>
-                <td className="px-4 py-3 border border-gray-300  line-clamp-3">
+                <td className="px-4 py-3 border border-gray-300 line-clamp-3">
                   {blog.description}
                 </td>
                 <td className="px-4 py-3 border border-gray-300 truncate max-w-md">
                   {blog.author}
+                </td>
+                <td className="px-4 py-3 border border-gray-300 text-center flex items-center justify-center gap-4">
+                  {/* View Icon */}
+
+                  {adminInfo.role === "admin" ? (
+                    <>
+                      {/* Delete Icon */}
+                      <FaTrash
+                        className="text-red-600 hover:text-red-800 cursor-pointer"
+                        title="Delete"
+                        onClick={() => handleDelete(blog.id)}
+                      />
+                    </>
+                  ) : (
+                    <Link to={`/blogs/${blog.id}`}>
+                      <FaEdit
+                        className="text-green-600 hover:text-green-800 cursor-pointer"
+                        title="Edit"
+                      />
+                    </Link>
+                  )}
                 </td>
                 <td className="px-4 py-3 border border-gray-300">
                   {blog.image ? (
@@ -72,69 +122,6 @@ const AdminBlogTable = () => {
           </tbody>
         </table>
       </div>
-
-      {/* Add New Blog Section */}
-      {/* {isAdding && (
-          <div className="mt-8 p-6 bg-white shadow-md rounded-lg">
-            <h2 className="text-xl font-semibold text-blue-600 mb-4">
-              Add New Blog
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input
-                type="text"
-                name="title"
-                value={newBlog.title}
-                onChange={handleInputChange}
-                placeholder="Title"
-                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <input
-                type="text"
-                name="title"
-                value={newBlog.author}
-                onChange={handleInputChange}
-                placeholder="Author "
-                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <textarea
-                name="description"
-                value={newBlog.description}
-                onChange={handleInputChange}
-                placeholder="Short Description"
-                rows="2"
-                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <textarea
-                name="content"
-                value={newBlog.content}
-                onChange={handleInputChange}
-                placeholder="Full Content"
-                rows="5"
-                className="w-full col-span-1 md:col-span-2 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-            <div className="flex items-center gap-4 mt-4">
-              <button
-                className="px-6 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-                onClick={blogPublish}
-              >
-                Publish
-              </button>
-              <button
-                className="px-6 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-                onClick={() => setIsAdding(false)}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        )} */}
     </div>
   );
 };
