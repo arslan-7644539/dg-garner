@@ -4,8 +4,10 @@ import supabase from "../lib/supabase";
 export const CardContext = createContext();
 export const CardProvider = ({ children }) => {
   const [cardData, setCardData] = useState([]);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
 
+  // -------------------------
 
   useEffect(() => {
     const cardItem = async () => {
@@ -13,18 +15,19 @@ export const CardProvider = ({ children }) => {
 
       if (data) {
         setCardData(data);
-        setLoading(false)
-
+        setLoading(false);
       } else {
         console.log(error);
-        setLoading(true)
+        setLoading(true);
       }
     };
     cardItem();
-  }, []);
+  }, [page]);
 
   return (
-    <CardContext.Provider value={{ cardData, setCardData, loading, setLoading }}>
+    <CardContext.Provider
+      value={{ cardData, setCardData, loading, setLoading,  page, setPage }}
+    >
       {children}
     </CardContext.Provider>
   );

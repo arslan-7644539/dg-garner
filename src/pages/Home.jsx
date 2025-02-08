@@ -1,18 +1,33 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import MyCards from "../components/MyCards";
 import { CardContext } from "../components/CardContext";
 import SpinnerEffect from "../components/SpinnerEffect";
 import { SearchContext } from "../components/SearchContext";
+import { Box, Pagination } from "@mui/material";
 
 const Home = () => {
-  const { cardData, loading } = useContext(CardContext);
+  // ---------------------------
+
+  const { cardData, loading, page, setPage } = useContext(CardContext);
+
+  const itemPerPage = 3;
+  const totalPage = Math.ceil(cardData.length / itemPerPage);
+  const paginatedData = cardData.slice(
+    (page - 1) * itemPerPage,
+    page * itemPerPage
+  );
+  const handleChange = (e, newPage) => {
+    setPage(newPage);
+  };
+  // --------------------------------------------------------
+
   const { searchInput } = useContext(SearchContext);
 
   const searchQuerry = searchInput
-    ? cardData.filter((data) =>
+    ? paginatedData.filter((data) =>
         data.title.toLowerCase().includes(searchInput.toLowerCase())
       )
-    : cardData;
+    : paginatedData;
 
   return (
     <div>
@@ -47,6 +62,28 @@ const Home = () => {
                 />
               ))}
             </div>
+
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              width="100%"
+              bottom={0}
+              // bgcolor="white"
+              border={"none"}
+              p={2}
+            >
+              <Pagination
+                variant="outlined"
+                // showFirstButton
+                // showLastButton
+                onChange={handleChange}
+                page={page}
+                color="primary"
+                count={totalPage}
+                // sx={{ boxShadow: "0px -2px 10px rgba(0, 0, 0, 0.1)" }}
+              />
+            </Box>
           </section>
 
           {/* Why Choose Us Section */}
